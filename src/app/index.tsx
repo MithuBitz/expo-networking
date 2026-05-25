@@ -1,64 +1,24 @@
-import { useEffect, useState } from "react";
-import { Button, ScrollView, StyleSheet, Text, View } from "react-native";
+import React, { useEffect } from "react";
+import { StyleSheet, Text, View } from "react-native";
 
-export default function Index() {
-  const [output, setOutput] = useState("Loading...");
-
-  async function callApi(label: string, url: string, options?: RequestInit) {
-    setOutput(`${label}\n\nLoading...`);
-    try {
-      const res = await fetch(url, options);
-      const data = await res.json();
-      console.log(data);
-      setOutput(`${label}\n\n${JSON.stringify(data, null, 2)}`);
-    } catch (error) {
-      setOutput(`${label}\n\n${String(error)}`);
-    }
-  }
-
+const IndexScreen = () => {
   useEffect(() => {
-    callApi("GET /api/users", "/api/users");
+    async function pingBackend() {
+      const res = await fetch("http://192.168.1.2:3000/api/v1/hello-world");
+      const data = await res.json();
+
+      console.log(data);
+    }
+    pingBackend();
   }, []);
 
   return (
-    <View style={styles.container}>
-      <Button
-        title="GET /api/users"
-        onPress={() => callApi("GET /api/users", "/api/users")}
-      />
-      <Button
-        title="POST /api/users"
-        onPress={() =>
-          callApi("POST /api/users", "/api/users", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              name: "Test User",
-              email: "test@example1.com",
-            }),
-          })
-        }
-      />
-      <Button
-        title="GET /api/users/1"
-        onPress={() => callApi("GET /api/users/1", "/api/users/1")}
-      />
-      <ScrollView style={styles.output}>
-        <Text>{output}</Text>
-      </ScrollView>
+    <View>
+      <Text>IndexScreen</Text>
     </View>
   );
-}
+};
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 16,
-    paddingTop: 48,
-    gap: 8,
-  },
-  output: {
-    flex: 1,
-    marginTop: 16,
-  },
-});
+export default IndexScreen;
+
+const styles = StyleSheet.create({});

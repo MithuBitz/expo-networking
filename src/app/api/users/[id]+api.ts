@@ -19,8 +19,8 @@ export async function GET(_req: Request, { id }: Ctx) {
   }
 }
 
-export async function PATCH(request: Request, { params }: Ctx) {}
+export async function PATCH(request: Request, { id }: Ctx) {}
 
-export async function PUT(request: Request, { params }: Ctx) {}
+export async function PUT(request: Request, { id }: Ctx) {}
 
-export async function DELETE(request: Request, { params }: Ctx) {}
+export async function DELETE(request: Request, { id }: Ctx) {}
